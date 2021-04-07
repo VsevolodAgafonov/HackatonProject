@@ -1,0 +1,17 @@
+version: "2"
+services:
+  backend_latest:
+    build:
+      context: ../backend/.
+      dockerfile: Dockerfile
+    ports:
+      - 3006:3006
+  frontend_latest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - backend_latest
