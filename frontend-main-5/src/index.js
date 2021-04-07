@@ -1,8 +1,5 @@
 import Olympiads from "./components/olympiadsPage.jsx";
 import Olympiad from "./components/olympiadPage.jsx";
-import "./styles/login.css";
-
-
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, Switch } from "react-router-dom";

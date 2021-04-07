@@ -1,0 +1,62 @@
+body {
+	background-color:rgba(242, 242, 242, 1);
+}
+.main-olympiad-page {
+	width:1100px;
+	min-height:300px;
+	background-color:white;
+	margin:auto;
+	padding:30px;
+	display:flex;
+	flex-wrap:wrap;
+}
+.olympiad-header-info {
+	width:100%;
+	display:grid;
+	grid-template-columns:400px 600px 200px;
+	height:100px;
+}
+.olympiad-header-info-left .title {
+	font-size:32px;
+	font-weight:700;
+	margin-bottom:0;
+}
+.olympiad-header-info-left .text {
+	font-size:18px;
+	font-weight:400;
+	margin-bottom:0;
+}
+.olympiad-main-info {
+	width:100%;
+	display:grid;
+	grid-template-columns:1fr 1fr 1fr;
+	margin-top:0px;
+}
+.olympiad-main-info img {
+	width:410px;
+	height:250px;
+	border-radius:10px;
+}
+.olympiad-main-info-center {
+	padding-left:20px;
+}
+.olympiad-main-info-center .info-key {
+	color:#333333;
+	font-size:22px;
+	font-weight:700;
+	margin:0;
+}
+.olympiad-main-info-center .info-value {
+	color:#333333;
+	font-size:16px;
+	font-weight:400;
+	margin:0;
+}
+.olympiad-main-info-right {
+	display:flex;
+	align-items:flex-end;
+}
+.olympiad-main-info-right button {
+	background-color:rgba(78, 166, 63, 1);
+	color:white !important;
+}

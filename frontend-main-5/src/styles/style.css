@@ -1,0 +1,88 @@
+.ReactVirtualized__Grid.ReactVirtualized__List:focus {
+  outline: none;
+}
+.ReactVirtualized__List::-webkit-scrollbar {
+  display: none;
+}
+.ReactVirtualized__List {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+body {
+	background-color:rgba(242, 242, 242, 1);
+}
+.main {
+	width:1100px;
+	min-height:900px;
+	background-color:rgba(242, 242, 242, 1);
+	margin:auto;
+	padding:30px;
+}
+.search-form {
+	width:100%;
+	background-color:white;
+	padding:20px;
+	display:grid;
+	grid-template-columns:2fr 0.25fr 170px 0.25fr 170px;
+}
+.content {
+	width:100%;
+	background-color:white;
+	margin-top:20px;
+}
+.nav-info {
+	font-family: 'Roboto Bold', 'Roboto', sans-serif;
+	font-weight: 700;
+	font-style: normal;
+	font-size: 16px;
+	color:#333333;
+	display:grid;
+	grid-template-columns:210px 293px 75px 110px 150px 0.5fr 0.7fr;
+}
+.olympiad-element {
+	display:grid;
+	grid-template-columns:1.5fr 290px 0.5fr 0.7fr 1fr 0.5fr 0.7fr;
+	height:100%;
+}
+.olympiad-image {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+}
+.olympiad-image img {
+	width:170px;
+	height:120px;
+	border-radius:10px;
+}
+.olympiad-name {
+	padding-top:18px;
+}
+.olympiad-name p{
+	margin-bottom:0px;
+}
+.olympiad-name-dates {
+	font-size:14px;
+	font-weight:400px;
+}
+.olympiad-name-dates span {
+	font-weight:700;
+}
+.olympiad-name-title {
+	font-weight:700;
+	font-size:22px;
+	margin:0;
+}
+.olympiad-level, .olympiad-type, .olympiad-directions, .olympiad-classes, .olympiad-more {
+	display:flex;
+	align-items:center;
+}
+.olympiad-level {
+	padding-left:10px;
+}
+.olympiad-more {
+	margin-left: -15px;
+}
+.olympiad-more button {
+	background-color:rgba(78, 166, 63, 1);
+	color:white !important;
+}
