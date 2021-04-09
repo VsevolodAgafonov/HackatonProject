@@ -91,7 +91,7 @@ class OlympiadPage extends Component {
             <div className="olympiad-main-footer">
                 <button
                 type="submit"
-                className="btn btn-default filter-col btn-user-form btn-get-user"
+                className="btn btn-outline-secondary"
                 onClick={() => this.handleBack()}
                 >
                 <span className="glyphicon glyphicon-record" />

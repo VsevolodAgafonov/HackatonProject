@@ -7,7 +7,7 @@ import "regenerator-runtime/runtime";
 import history from "../history";
 const rowCount = 1000;
 const rowHeight = 180;
-class OlympiadsForm extends Component {
+class AdminOlympiadsForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,15 +18,31 @@ class OlympiadsForm extends Component {
     this.renderRow = this.renderRow.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleGet = this.handleGet.bind(this);
-    
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   handleChange(evt) {
     this.setState({ searchValue: evt.target.value });
   }
-  handleGet(value) {
-      history.push("olympiad?id=" + value); 
+  handleAdd(){ 
+    history.push("/add");
   }
+  handleEdit(id) {
+    history.push("edit?id=" + id); 
+  }
+  handleDelete(id){
+    axios
+      .get(
+        process.env.BACKEND_URL + "/deleteolympiad?id=" + id,
+        { withCredentials: true }
+      )
+      .then((response) => {
+      })
+    history.push("/admin");
+    document.location.reload();
+  }
+
 
   handleSubmit() {
     this.setState({ isLoading: true });
@@ -84,14 +100,22 @@ class OlympiadsForm extends Component {
               {this.state.olympiadsInformation[index].directions}
               </div>
               <div className="olympiad-classes">{this.state.olympiadsInformation[index].classes}</div>
-              <div className="olympiad-more">
+              <div className="olympiad-admin-more">
                 <button
                 type="submit"
-                className="btn btn-default filter-col btn-user-form btn-get-user"
-                onClick={() => this.handleGet(this.state.olympiadsInformation[index].id)}
+                className="btn btn-default filter-col btn-user-form btn-get-user redact"
+                onClick={() => this.handleEdit(this.state.olympiadsInformation[index].id)}
                 >
                 <span className="glyphicon glyphicon-record" />
-                Подробнее
+                Редактировать
+                </button>
+                <button
+                type="submit"
+                className="btn btn-default filter-col btn-user-form btn-get-user delete"
+                onClick={() => this.handleDelete(this.state.olympiadsInformation[index].id)}
+                >
+                <span className="glyphicon glyphicon-record" />
+                Удалить
                 </button>
                 </div>
             </div>
@@ -110,7 +134,7 @@ class OlympiadsForm extends Component {
     if (!isLoading) {
       return (
         <div className="App">
-          <div className="search-form">
+          <div className="search-admin-form">
             <div className="input-group">
               <div className="form-outline">
                 <input type="search" id="form1" value ={searchValue} placeholder = "Поиск по названию, направлению, классу, типу участия" className="form-control" onChange={this.handleChange}/>
@@ -121,9 +145,8 @@ class OlympiadsForm extends Component {
               </button>
             </div>
             <div></div>
-            <button type="button" className="btn btn-primary">Дата регистрации</button>
+            <button type="button" className="btn btn-primary" onClick={() => this.handleAdd()}>Добавить олимпиаду</button>
             <div></div>
-            <button type="button" className="btn btn-primary">Дата проведения</button>
           </div>
           <div className="content">
             <div className="nav-info">
@@ -158,4 +181,4 @@ class OlympiadsForm extends Component {
   }
 }
 
-export default OlympiadsForm;
+export default AdminOlympiadsForm;

@@ -25,6 +25,12 @@ body {
 	display:grid;
 	grid-template-columns:2fr 0.25fr 170px 0.25fr 170px;
 }
+.form-outline {
+	width:430px !important;
+}
+.search-btn {
+	margin-left:20px !important;
+}
 .content {
 	width:100%;
 	background-color:white;

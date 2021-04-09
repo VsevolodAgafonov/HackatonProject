@@ -40,10 +40,12 @@ function showRequestInfo(req, res, next) {
   next();
 }
 
-app.get("/olimpiads", showRequestInfo, (req, res) => {
-  db.any(
-    "SELECT id, name, description, level, type, directions, classes, date_competition, date_registration FROM olympiads WHERE visible = true"
-  )
+app.get("/olympiads", showRequestInfo, (req, res) => {
+  log.info("Your query is ", req.query.search_value);
+  if (req.query.search_value == undefined || req.query.search_value ==""){
+    db.any(
+      "SELECT id, name, description, level, type, directions, classes, date_competition, date_registration FROM olympiads WHERE visible = true"
+    )
     .then((data) => {
       var answerAboutOlympiads = JSON.parse(JSON.stringify(data));
       log.info(answerAboutOlympiads);
@@ -58,6 +60,26 @@ app.get("/olimpiads", showRequestInfo, (req, res) => {
       res.status(500).send("Unexpected error");
       return;
     });
+  }
+  else {
+    db.any(
+      "SELECT id, name, description, level, type, directions, classes, date_competition, date_registration FROM olympiads WHERE visible = true AND (name LIKE '%" + req.query.search_value + "%' OR directions LIKE '%" + req.query.search_value + "%' OR classes LIKE '%" + req.query.search_value + "%' OR type LIKE '%" + req.query.search_value + "%')"
+    )
+    .then((data) => {
+      var answerAboutOlympiads = JSON.parse(JSON.stringify(data));
+      log.info(answerAboutOlympiads);
+      res.json(answerAboutOlympiads);
+      return;
+    })
+    .catch((error) => {
+      log.error(
+        "Problem while getting information about all olympiads",
+        error
+      );
+      res.status(500).send("Unexpected error");
+      return;
+    });
+  }
 });
 app.get("/getolympiadinfo", showRequestInfo, (req, res) => {
   db.any(
@@ -78,32 +100,80 @@ app.get("/getolympiadinfo", showRequestInfo, (req, res) => {
       return;
     });
 });
-
-app.get(
-  "/getfilterlanguages",
-  showRequestInfo,
-  (req, res) => {
-    db.any(
-      "SELECT language_name FROM detail_user_commits GROUP BY language_name ORDER BY language_name"
-    )
+app.get("/addolympiad", showRequestInfo, (req, res) => {
+  log.info(req.query.name, req.query.description);
+  db.any(
+    "SELECT id FROM olympiads ORDER BY id DESC LIMIT 1"
+  )
+    .then((data) => {
+      var answerAboutLastId = JSON.parse(JSON.stringify(data));
+      log.info(answerAboutLastId[0]["id"]);
+      db.any(
+      "INSERT INTO olympiads VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, true)", [parseInt(answerAboutLastId[0]["id"]) + 1, req.query.name, req.query.description, req.query.type, req.query.level, req.query.classes, req.query.directions, req.query.dateCompetition, req.query.dateRegistration, req.query.organization]
+      )
       .then((data) => {
-        var answer = JSON.parse(JSON.stringify(data));
-        var result = [];
-        for (var i = 0; i < answer.length; i++) {
-          result.push(answer[i]["language_name"]);
-        }
-        res.json(result);
+        
+        return;
       })
       .catch((error) => {
         log.error(
-          "Problem while getting information about filter form languages from detail_user_commits:",
-          error
-        );
-        res.status(500).send("Unexpected error");
-        return;
-      });
-  }
-);
+        "Problem while getting information about all olympiads",
+        error
+      );
+      res.status(500).send("Unexpected error");
+      return;
+    });
+      return;
+    })
+    .catch((error) => {
+      log.error(
+        "Problem while getting information about all olympiads",
+        error
+      );
+      res.status(500).send("Unexpected error");
+      return;
+    });
+});
+app.get("/deleteolympiad", showRequestInfo, (req, res) => {
+
+  db.any(
+    "UPDATE olympiads SET visible = false WHERE id = $1", req.query.id
+  )
+    .then((data) => {
+      var answerAboutLastId = JSON.parse(JSON.stringify(data));
+      log.info("Deleting olympiad by id Done");
+      return;
+    })
+    .catch((error) => {
+      log.error(
+        "Problem while deleting olympiad",
+        error
+      );
+      res.status(500).send("Unexpected error");
+      return;
+    });
+});
+app.get("/editolympiad", showRequestInfo, (req, res) => {
+  log.info("Begin updating");
+  log.info(req.query.name, req.query.id);
+  db.any(
+    "UPDATE olympiads SET name = $1, description = $2, type = $3, level = $4, classes = $5, directions = $6, date_competition = $7, date_registration = $8, organization = $9 WHERE id = $10", [req.query.name, req.query.description, req.query.type, req.query.level, req.query.classes, req.query.directions, req.query.dateCompetition, req.query.dateRegistration, req.query.organization, req.query.id]
+  )
+    .then((data) => {
+      var answerAboutLastId = JSON.parse(JSON.stringify(data));
+      log.info("Update olympiad by id Done");
+      return;
+    })
+    .catch((error) => {
+      log.error(
+        "Problem while updating olympiad",
+        error
+      );
+      res.status(500).send("Unexpected error");
+      return;
+    });
+});
+
 
 
 app.listen(BACKEND_PORT, () =>

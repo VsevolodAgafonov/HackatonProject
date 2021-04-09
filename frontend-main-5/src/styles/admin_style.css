@@ -1,0 +1,24 @@
+.search-admin-form {
+	width:100%;
+	background-color:white;
+	padding:20px;
+	display:grid;
+	grid-template-columns:580px 190px 190px;
+}
+.search-admin-form .form-outline{
+	width:480px !important;
+}
+.olympiad-admin-more button {
+	font-size:12px;
+}
+.olympiad-admin-more .redact {
+	background-color:rgba(78, 166, 63, 1);
+	color:white !important;
+	margin-top:40px;
+}
+.olympiad-admin-more .delete {
+	background-color:#dc3545;
+	color:white !important;
+	margin-top:10px;
+	width:115px;
+}
